@@ -4,6 +4,7 @@ import com.au.address.bean.AddressBook;
 import com.au.address.bean.ContactDetails;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -18,6 +19,12 @@ public class AddressBookSave {
     public static void main(String[] args) {
         logger.info("Process  Started -------------------");
     }
+
+
+    /**
+     * Read the file and load into Objects
+     * @return
+     */
     public  static List<AddressBook> readAddressBook() {
         List<AddressBook> addressBooks = new ArrayList<AddressBook>();
         try {
@@ -38,11 +45,24 @@ public class AddressBookSave {
            return addressBooks;
     }
 
+    /**
+     * store the address in the file with name and contact details
+     * @param addressBooks
+     */
     public void storeAddressBooks(List<AddressBook> addressBooks) {
         try {
             FileOutputStream fos = new FileOutputStream("AddressBooks.txt");
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
-            oos.writeObject(addressBooks);
+            OutputStreamWriter oos = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+            for (AddressBook addressBook : addressBooks) {
+                oos.write(String.valueOf(addressBook.getName()));
+                oos.write("\t");
+                for (ContactDetails c : addressBook.getContacts()) {
+                    oos.write(String.valueOf(c.getName()));
+                    oos.write("\t");
+                }
+                oos.write("\n");
+            }
+
             oos.close();
         } catch (IOException e) {
             logger.info("Exception found: "+e);
@@ -65,6 +85,11 @@ public class AddressBookSave {
 
     }
 
+    /**
+     * Get uniqueContacts from addressBook
+     * @param addressBook
+     * @return Collection<ContactDetails>
+     */
     public Collection<ContactDetails> getUniqueContacts(List<AddressBook> addressBook)
     {
         Set<ContactDetails> commonContacts = new HashSet<ContactDetails>();

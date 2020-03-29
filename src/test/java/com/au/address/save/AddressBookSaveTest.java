@@ -33,6 +33,7 @@ public class AddressBookSaveTest {
         test.uniqueFriendsFromTwoAddressBooks();
         test.uniqueFriendsFromThreeAddressBooks();
 
+
     }
 
 
@@ -153,8 +154,7 @@ public class AddressBookSaveTest {
         logger.info("Address Book: " + addressBook.getName());
         logger.info("Friends:");
         for (ContactDetails contact : addressBook.getContacts()) {
-            logger.info(contact.getName());
-            logger.info(contact.getPhoneNumber());
+            logger.info("Name: "+contact.getName()+"Phone Number: "+ contact.getPhoneNumber());
         }
 
         addressBook.getContacts().sort((ContactDetails o1, ContactDetails o2)->o1.getName().compareTo(o2.getName()));
@@ -162,8 +162,7 @@ public class AddressBookSaveTest {
         logger.info("Address Book: " + addressBook.getName());
         logger.info("Friends:");
         for (ContactDetails contact : addressBook.getContacts()) {
-            logger.info(contact.getName());
-            logger.info(contact.getPhoneNumber());
+            logger.info("Name: "+contact.getName()+"Phone Number: "+ contact.getPhoneNumber());
         }
         logger.info("\n");
 
